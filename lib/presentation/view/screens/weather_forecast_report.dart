@@ -102,7 +102,8 @@ class _WeatherForecastReportState extends State<WeatherForecastReport> {
                     children: [
                       Text(TextConstant.today,
                           style: TextStyleHelper.textStylefontSize24),
-                      Text(state.hourList[0].time,
+                      Text(
+                          "${DateTime.parse(state.hourList[0].time).day}/${DateTime.parse(state.hourList[0].time).month}",
                           style: TextStyleHelper.textStylefontSize18),
                     ],
                   ),

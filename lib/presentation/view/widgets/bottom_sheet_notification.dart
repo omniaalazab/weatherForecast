@@ -7,75 +7,83 @@ import 'package:weather_app/presentation/view_model/notification/notification_cu
 import 'package:weather_app/presentation/view_model/notification/notification_state.dart';
 import '../../../helper/color_helper.dart';
 
-class BottomSheetNotification extends StatelessWidget {
+class BottomSheetNotification extends StatefulWidget {
   const BottomSheetNotification({super.key});
+
+  @override
+  State<BottomSheetNotification> createState() =>
+      _BottomSheetNotificationState();
+}
+
+class _BottomSheetNotificationState extends State<BottomSheetNotification> {
+  @override
+  void initState() {
+    context.read<NotificationCubit>().initialize();
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     // Ensure the NotificationCubit is created and initialized
-    final notificationCubit = context.read<NotificationCubit>();
 
-    return BlocProvider.value(
-      value: notificationCubit,
-      child: Container(
-        height: context.screenHeight * 0.5,
-        width: context.screenWidth,
-        decoration: BoxDecoration(
-          color: ColorHelper.white,
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-          ),
+    return Container(
+      height: context.screenHeight * 0.5,
+      width: context.screenWidth,
+      decoration: BoxDecoration(
+        color: ColorHelper.white,
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
         ),
-        child: BlocBuilder<NotificationCubit, NotificationState>(
-          builder: (context, state) {
-            if (state.notificationModel.isEmpty) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset('assets/images/bell.png'),
-                  Text(TextConstant.noNotification,
-                      style: TextStyleHelper.textStylefontSize18.copyWith(
-                        color: ColorHelper.lightBlue,
-                      )),
-                ],
-              );
-            } else {
-              return Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Text(
-                      TextConstant.notifications,
-                      style: TextStyleHelper.textStylefontSize18.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+      ),
+      child: BlocBuilder<NotificationCubit, NotificationState>(
+        builder: (context, state) {
+          if (state.notificationModel.isEmpty) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset('assets/images/bell.png'),
+                Text(TextConstant.noNotification,
+                    style: TextStyleHelper.textStylefontSize18.copyWith(
+                      color: ColorHelper.lightBlue,
+                    )),
+              ],
+            );
+          } else {
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Text(
+                    TextConstant.notifications,
+                    style: TextStyleHelper.textStylefontSize18.copyWith(
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: state.notificationModel.length,
-                      itemBuilder: (context, index) {
-                        final notification = state.notificationModel[index];
-                        DateTime now = DateTime.now();
-                        Duration difference =
-                            now.difference(notification.date!);
-                        int minutesAgo = difference.inMinutes;
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: state.notificationModel.length,
+                    itemBuilder: (context, index) {
+                      final notification = state.notificationModel[index];
+                      DateTime now = DateTime.now();
+                      Duration difference = now.difference(notification.date!);
+                      int minutesAgo = difference.inMinutes;
 
-                        return _buildNotificationItem(
-                          body: notification.body!,
-                          imagePath: notification.imagePath!,
-                          minutesAgo: minutesAgo,
-                          title: notification.title!,
-                        );
-                      },
-                    ),
+                      return _buildNotificationItem(
+                        body: notification.body!,
+                        imagePath: notification.imagePath!,
+                        minutesAgo: minutesAgo,
+                        title: notification.title!,
+                      );
+                    },
                   ),
-                ],
-              );
-            }
-          },
-        ),
+                ),
+              ],
+            );
+          }
+        },
       ),
     );
   }
@@ -97,8 +105,8 @@ class _buildNotificationItem extends StatelessWidget {
     return ListTile(
       leading: Image.network(
         imagePath,
-        width: 60,
-        height: 60,
+        width: 20,
+        height: 50,
         fit: BoxFit.cover,
         errorBuilder: (context, error, stackTrace) {
           return const Icon(Icons.notifications);

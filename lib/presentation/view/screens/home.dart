@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_app/data/Repository/current_weather_repo.dart';
 import 'package:weather_app/extensions/media_query_values.dart';
 import 'package:weather_app/extensions/navigation_extension.dart';
 import 'package:weather_app/helper/color_helper.dart';

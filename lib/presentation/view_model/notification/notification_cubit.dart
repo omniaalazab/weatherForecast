@@ -17,7 +17,7 @@ class NotificationCubit extends Cubit<NotificationState> {
             body: message.notification!.body ?? 'No Body',
             date: message.sentTime,
             imagePath: message.data['image'] ??
-                'https://img.freepik.com/free-photo/young-beautiful-woman-pink-warm-sweater-natural-look-smiling-portrait-isolated-long-hair_285396-896.jpg?size=626&ext=jpg&ga=GA1.1.2008272138.1723075200&semt=ais_hybrid',
+                'https://www.svgrepo.com/show/29731/sunny.svg',
           ),
         );
         emit(NotificationState(notificationModel: notifications));
@@ -33,7 +33,7 @@ class NotificationCubit extends Cubit<NotificationState> {
             body: message.notification!.body ?? 'No Body',
             date: message.sentTime,
             imagePath: message.data['image'] ??
-                'https://img.freepik.com/free-photo/young-beautiful-woman-pink-warm-sweater-natural-look-smiling-portrait-isolated-long-hair_285396-896.jpg?size=626&ext=jpg&ga=GA1.1.2008272138.1723075200&semt=ais_hybrid',
+                'https://www.svgrepo.com/show/29731/sunny.svg',
           ),
         );
         emit(NotificationState(notificationModel: notifications));
