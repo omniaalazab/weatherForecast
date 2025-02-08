@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/data/repository/notification_repo.dart';
 import 'package:weather_app/extensions/media_query_values.dart';
 import 'package:weather_app/extensions/navigation_extension.dart';
 import 'package:weather_app/helper/color_helper.dart';
 import 'package:weather_app/helper/text_style_helper.dart';
-import 'package:weather_app/presentation/view/screens/weather_forecast_report.dart';
-import 'package:weather_app/presentation/view/widgets/bottom_sheet_notification.dart';
-import 'package:weather_app/presentation/view/widgets/common_widget/custom_elelvated_button.dart';
-import 'package:weather_app/presentation/view/widgets/common_widget/custom_text_form_field.dart';
-import 'package:weather_app/presentation/view_model/notification/notification_cubit.dart';
+import 'package:weather_app/presentation/ui/screens/weather_forecast_report.dart';
+import 'package:weather_app/presentation/ui/widgets/bottom_sheet_notification.dart';
+import 'package:weather_app/presentation/ui/widgets/common_widget/custom_elelvated_button.dart';
+import 'package:weather_app/presentation/ui/widgets/common_widget/custom_text_form_field.dart';
+import 'package:weather_app/presentation/bloc/notification/notification_cubit.dart';
 
 import '../../../core/text_constant.dart';
-import '../../view_model/get_weather_cubit/get_weather_cubit.dart';
-import '../../view_model/get_weather_cubit/get_weather_state.dart';
+import '../../bloc/get_weather_cubit/get_weather_cubit.dart';
+import '../../bloc/get_weather_cubit/get_weather_state.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -29,7 +30,8 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
 
-    _notificationCubit = NotificationCubit()..initialize();
+    _notificationCubit = NotificationCubit(NotificationRepository())
+      ..initialize();
 
     context
         .read<WeatherCubit>()

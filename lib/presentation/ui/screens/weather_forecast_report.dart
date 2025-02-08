@@ -3,20 +3,20 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/core/text_constant.dart';
-import 'package:weather_app/data/Repository/report_weather_per_hour.dart';
+import 'package:weather_app/data/repository/report_weather_per_hour.dart';
 import 'package:weather_app/data/models/weather_model.dart';
 import 'package:weather_app/extensions/media_query_values.dart';
 import 'package:weather_app/extensions/navigation_extension.dart';
 import 'package:weather_app/helper/color_helper.dart';
 import 'package:weather_app/helper/text_style_helper.dart';
-import 'package:weather_app/presentation/view/screens/home.dart';
+import 'package:weather_app/presentation/ui/screens/home.dart';
 
-import 'package:weather_app/presentation/view/widgets/weather_detail_container.dart';
-import 'package:weather_app/presentation/view_model/report_weather_10_days_cubit/report_weather_10_days_cubit.dart';
-import 'package:weather_app/presentation/view_model/report_weather_10_days_cubit/report_weather_10_days_state.dart';
-import 'package:weather_app/presentation/view_model/report_weather_per_hour_cubit/report_weather_per_hour_state.dart';
+import 'package:weather_app/presentation/ui/widgets/weather_detail_container.dart';
+import 'package:weather_app/presentation/bloc/report_weather_10_days_cubit/report_weather_10_days_cubit.dart';
+import 'package:weather_app/presentation/bloc/report_weather_10_days_cubit/report_weather_10_days_state.dart';
+import 'package:weather_app/presentation/bloc/report_weather_per_hour_cubit/report_weather_per_hour_state.dart';
 
-import '../../view_model/report_weather_per_hour_cubit/report_weather_per_hour_cubit.dart';
+import '../../bloc/report_weather_per_hour_cubit/report_weather_per_hour_cubit.dart';
 
 class WeatherForecastReport extends StatefulWidget {
   const WeatherForecastReport({super.key, required this.cityName});

@@ -4,15 +4,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_app/data/Repository/current_weather_repo.dart';
-import 'package:weather_app/data/Repository/report_weather_per_hour.dart';
+import 'package:weather_app/data/repository/current_weather_repo.dart';
+import 'package:weather_app/data/repository/notification_repo.dart';
+import 'package:weather_app/data/repository/report_weather_per_hour.dart';
 import 'package:weather_app/firebase_options.dart';
-import 'package:weather_app/presentation/view_model/get_weather_cubit/get_weather_cubit.dart';
-import 'package:weather_app/presentation/view_model/notification/notification_cubit.dart';
-import 'package:weather_app/presentation/view_model/report_weather_10_days_cubit/report_weather_10_days_cubit.dart';
-import 'package:weather_app/presentation/view_model/report_weather_per_hour_cubit/report_weather_per_hour_cubit.dart';
+import 'package:weather_app/presentation/bloc/get_weather_cubit/get_weather_cubit.dart';
+import 'package:weather_app/presentation/bloc/notification/notification_cubit.dart';
+import 'package:weather_app/presentation/bloc/report_weather_10_days_cubit/report_weather_10_days_cubit.dart';
+import 'package:weather_app/presentation/bloc/report_weather_per_hour_cubit/report_weather_per_hour_cubit.dart';
 
-import 'presentation/view/screens/home.dart';
+import 'presentation/ui/screens/home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -58,7 +59,7 @@ class MyApp extends StatelessWidget {
                 reportWeatherRepository: ReportWeatherForecastRepository()),
           ),
           BlocProvider(
-            create: (context) => NotificationCubit(),
+            create: (context) => NotificationCubit(NotificationRepository()),
           )
         ],
         child: const MaterialApp(

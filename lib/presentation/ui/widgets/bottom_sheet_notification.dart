@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/core/text_constant.dart';
 import 'package:weather_app/extensions/media_query_values.dart';
 import 'package:weather_app/helper/text_style_helper.dart';
-import 'package:weather_app/presentation/view_model/notification/notification_cubit.dart';
-import 'package:weather_app/presentation/view_model/notification/notification_state.dart';
+import 'package:weather_app/presentation/bloc/notification/notification_cubit.dart';
+import 'package:weather_app/presentation/bloc/notification/notification_state.dart';
 import '../../../helper/color_helper.dart';
 
 class BottomSheetNotification extends StatefulWidget {
