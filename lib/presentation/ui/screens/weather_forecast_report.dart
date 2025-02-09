@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/core/text_constant.dart';
-import 'package:weather_app/data/repository/report_weather_per_hour.dart';
+
 import 'package:weather_app/data/models/weather_model.dart';
 import 'package:weather_app/extensions/media_query_values.dart';
 import 'package:weather_app/extensions/navigation_extension.dart';
