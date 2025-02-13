@@ -71,7 +71,7 @@ class _BottomSheetNotificationState extends State<BottomSheetNotification> {
                       Duration difference = now.difference(notification.date!);
                       int minutesAgo = difference.inMinutes;
 
-                      return _buildNotificationItem(
+                      return _BuildNotificationItem(
                         body: notification.body!,
                         imagePath: notification.imagePath!,
                         minutesAgo: minutesAgo,
@@ -89,8 +89,8 @@ class _BottomSheetNotificationState extends State<BottomSheetNotification> {
   }
 }
 
-class _buildNotificationItem extends StatelessWidget {
-  const _buildNotificationItem({
+class _BuildNotificationItem extends StatelessWidget {
+  const _BuildNotificationItem({
     required this.imagePath,
     required this.title,
     required this.body,
