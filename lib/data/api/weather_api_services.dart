@@ -1,17 +1,21 @@
 import 'dart:developer';
 
+import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:weather_app/core/error/failure.dart';
 
 import '../../core/api_constant.dart';
-import '../../helper/dio_helper.dart';
+
 import '../models/weather_model.dart';
 
 class WeatherGetAPIServices {
-  static Future<WeatherModel> getCurrentWeatherData({
+  final Dio dio;
+  WeatherGetAPIServices(this.dio);
+  Future<Either<Failure, WeatherModel>> getCurrentWeatherData({
     required String searchedcityName,
   }) async {
     try {
-      Response response = await DioHelper.dio.get(
+      Response response = await dio.get(
         '${APIConstant.weatherAPIBaseUrl}/forecast.json',
         queryParameters: {
           'key': APIConstant.weatherAPIKey,
@@ -19,25 +23,29 @@ class WeatherGetAPIServices {
           'days': 1,
         },
       );
+      if (response.statusCode != 200 || response.data == null) {
+        return Left(Failure('Failed to fetch weather data'));
+      } else {
+        Map<String, dynamic> jsonData = response.data;
+        WeatherModel weatherModel = WeatherModel.fromJson(jsonData);
 
-      Map<String, dynamic> jsonData = response.data;
-      WeatherModel weatherModel = WeatherModel.fromJson(jsonData);
-      return weatherModel;
+        return Right(weatherModel);
+      }
     } on DioException catch (e) {
       String errorMsg = e.response?.data['error']['message'] ??
           'There is Error, try again Later...';
-      throw Exception(errorMsg);
+      return Left(Failure(errorMsg));
     } catch (e) {
       log(e.toString());
-      throw Exception('There is error, try again');
+      return Left(Failure("There is error, try again"));
     }
   }
 
-  static Future<List<Hour>> getWeatherDataPerHour({
+  Future<Either<Failure, List<Hour>>> getWeatherDataPerHour({
     required String searchedcityName,
   }) async {
     try {
-      Response response = await DioHelper.dio.get(
+      Response response = await dio.get(
         '${APIConstant.weatherAPIBaseUrl}/forecast.json',
         queryParameters: {
           'key': APIConstant.weatherAPIKey,
@@ -45,26 +53,29 @@ class WeatherGetAPIServices {
           'days': 1,
         },
       );
-
-      Map<String, dynamic> jsonData = response.data;
-      WeatherModel weatherModel = WeatherModel.fromJson(jsonData);
-      return weatherModel.forecast.forecastDays[0].hours;
+      if (response.statusCode != 200 || response.data == null) {
+        return Left(Failure('Failed to fetch weather data'));
+      } else {
+        Map<String, dynamic> jsonData = response.data;
+        WeatherModel weatherModel = WeatherModel.fromJson(jsonData);
+        return Right(weatherModel.forecast.forecastDays[0].hours);
+      }
     } on DioException catch (e) {
       String errorMsg = e.response?.data['error']['message'] ??
           'There is Error, try again Later...';
-      throw Exception(errorMsg);
+      return Left(Failure(errorMsg));
     } catch (e) {
       log(e.toString());
-      throw Exception('There is error, try again');
+      return Left(Failure('There is error, try again'));
     }
   }
 
-  static Future<WeatherModel> getWeatherData10Days({
+  Future<Either<Failure, WeatherModel>> getWeatherData10Days({
     required String searchedcityName,
     required int day,
   }) async {
     try {
-      Response response = await DioHelper.dio.get(
+      Response response = await dio.get(
         '${APIConstant.weatherAPIBaseUrl}/forecast.json',
         queryParameters: {
           'key': APIConstant.weatherAPIKey,
@@ -72,17 +83,20 @@ class WeatherGetAPIServices {
           'days': day,
         },
       );
-
-      Map<String, dynamic> jsonData = response.data;
-      WeatherModel weatherModel = WeatherModel.fromJson(jsonData);
-      return weatherModel;
+      if (response.statusCode != 200 || response.data == null) {
+        return Left(Failure('Failed to fetch weather data'));
+      } else {
+        Map<String, dynamic> jsonData = response.data;
+        WeatherModel weatherModel = WeatherModel.fromJson(jsonData);
+        return Right(weatherModel);
+      }
     } on DioException catch (e) {
       String errorMsg = e.response?.data['error']['message'] ??
           'There is Error, try again Later...';
-      throw Exception(errorMsg);
+      return Left(Failure(errorMsg));
     } catch (e) {
       log(e.toString());
-      throw Exception('There is error, try again');
+      return Left(Failure('There is error, try again'));
     }
   }
 }
