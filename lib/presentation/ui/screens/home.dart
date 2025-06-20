@@ -85,7 +85,20 @@ class BuildUIContentColumn extends StatelessWidget {
           );
         } else if (state is WeatherErrorState) {
           return Center(
-            child: Text(state.errorMessage),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(state.errorMessage),
+                SizedBox(height: 2),
+                CustomElevatedButton(
+                    widthButton: context.screenWidth / 2,
+                    buttonText: "Try again",
+                    onPressedFunction: () {
+                      context.push(Home());
+                    })
+              ],
+            ),
           );
         } else if (state is WeatherSucessState) {
           return Column(
@@ -109,6 +122,9 @@ class BuildUIContentColumn extends StatelessWidget {
                                 .getWeather(textController.text);
                           }),
                       validatorFunction: (value) {
+                        if (value == null || value.isEmpty) {
+                          return TextConstant.textFieldValidator;
+                        }
                         return null;
                       },
                     ),
