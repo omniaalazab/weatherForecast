@@ -9,4 +9,5 @@ class TextConstant {
   static const String nodatafound = "No data found";
   static const String noNotification = "No Notification";
   static const String notifications = "Notifications";
+  static const String textFieldValidator = "Pleasr enter a vaild city name";
 }
