@@ -13,13 +13,12 @@ class ReportWeather10DaysCubit extends Cubit<ReportWeather10DaysStates> {
 
   Future<void> getReportWeather10Day(String cityName, int day) async {
     emit(ReportWeatherLoading10DaysState());
-    try {
-      final WeatherModel weatherModel =
-          await reportWeatherRepository.getWeatherForecast(cityName, day);
-      emit(ReportWeatherSucess10DaysState(weatherModel: weatherModel));
-    } catch (e) {
-      emit(ReportWeatherError10DaysState(
-          "Failed to fetch weather data :$e.toString()"));
-    }
+
+    final result =
+        await reportWeatherRepository.getWeatherForecast(cityName, day);
+    result.fold(
+        (failure) => emit(ReportWeatherError10DaysState(failure.message)),
+        (weather) =>
+            emit(ReportWeatherSucess10DaysState(weatherModel: weather)));
   }
 }

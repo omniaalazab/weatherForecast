@@ -12,13 +12,9 @@ class ReportWeatherPerHourCubit extends Cubit<ReportWeatherStates> {
   WeatherModel? weathermodel;
   Future<void> getReportWeatherPerHour(String cityName, int hour) async {
     emit(ReportWeatherLoadingState());
-    try {
-      final List<Hour> hourList =
-          await reportWeatherRepository.getWeatherPerHour(cityName);
-      emit(ReportWeatherSucessState(hourList: hourList));
-    } catch (e) {
-      emit(ReportWeatherErrorState(
-          "Failed to fetch weather data :$e.toString()"));
-    }
+
+    final result = await reportWeatherRepository.getWeatherPerHour(cityName);
+    result.fold((failure) => emit(ReportWeatherErrorState(failure.message)),
+        (hourList) => emit(ReportWeatherSucessState(hourList: hourList)));
   }
 }
