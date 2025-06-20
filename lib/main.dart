@@ -4,6 +4,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/data/api/services_locator.dart';
+import 'package:weather_app/data/api/weather_api_services.dart';
 import 'package:weather_app/data/repository/current_weather_repo.dart';
 import 'package:weather_app/data/repository/notification_repo.dart';
 import 'package:weather_app/data/repository/report_weather_per_hour.dart';
@@ -26,10 +28,11 @@ void main() async {
     sound: true,
   );
   getToken();
+  setupLocator();
   runApp(const MyApp());
 }
 
-getToken() async {
+Future<void> getToken() async {
   try {
     String? myToken = await FirebaseMessaging.instance.getToken();
     // String token = await Candidate().getToken();
@@ -49,14 +52,17 @@ class MyApp extends StatelessWidget {
         providers: [
           BlocProvider(
               create: (_) => WeatherCubit(
-                  currentWeatherRepository: CurrentWeatherRepository())),
+                  currentWeatherRepository: CurrentWeatherRepository(
+                      getIt<WeatherGetAPIServices>()))),
           BlocProvider(
             create: (context) => ReportWeatherPerHourCubit(
-                reportWeatherRepository: ReportWeatherForecastRepository()),
+                reportWeatherRepository: ReportWeatherForecastRepository(
+                    getIt<WeatherGetAPIServices>())),
           ),
           BlocProvider(
             create: (context) => ReportWeather10DaysCubit(
-                reportWeatherRepository: ReportWeatherForecastRepository()),
+                reportWeatherRepository: ReportWeatherForecastRepository(
+                    getIt<WeatherGetAPIServices>())),
           ),
           BlocProvider(
             create: (context) => NotificationCubit(NotificationRepository()),
