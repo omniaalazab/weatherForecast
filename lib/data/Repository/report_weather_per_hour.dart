@@ -1,22 +1,17 @@
+import 'package:dartz/dartz.dart';
+import 'package:weather_app/core/error/failure.dart';
+
 import '../api/weather_api_services.dart';
 import '../models/weather_model.dart';
 
 class ReportWeatherForecastRepository {
-  // Get current weather data
-  // Future<WeatherModel> getCurrentWeather(String cityName) async {
-  //   try {
-  //     return await WeatherGetAPIServices.getCurrentWeatherData(
-  //       searchedcityName: cityName,
-  //     );
-  //   } catch (e) {
-  //     throw Exception("Failed to fetch current weather data: $e");
-  //   }
-  // }
+  final WeatherGetAPIServices weatherService;
+  ReportWeatherForecastRepository(this.weatherService);
 
   // Get weather data per hour
-  Future<List<Hour>> getWeatherPerHour(String cityName) async {
+  Future<Either<Failure, List<Hour>>> getWeatherPerHour(String cityName) async {
     try {
-      return await WeatherGetAPIServices.getWeatherDataPerHour(
+      return await weatherService.getWeatherDataPerHour(
         searchedcityName: cityName,
       );
     } catch (e) {
@@ -25,9 +20,10 @@ class ReportWeatherForecastRepository {
   }
 
   // Get weather forecast for multiple days
-  Future<WeatherModel> getWeatherForecast(String cityName, int days) async {
+  Future<Either<Failure, WeatherModel>> getWeatherForecast(
+      String cityName, int days) async {
     try {
-      return await WeatherGetAPIServices.getWeatherData10Days(
+      return await weatherService.getWeatherData10Days(
         searchedcityName: cityName,
         day: days,
       );
