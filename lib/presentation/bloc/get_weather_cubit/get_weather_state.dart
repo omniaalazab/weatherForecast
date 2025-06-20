@@ -16,5 +16,5 @@ class WeatherSucessState extends GetWeatherStates {
 
 class WeatherErrorState extends GetWeatherStates {
   final String errorMessage;
-  WeatherErrorState(this.errorMessage);
+  WeatherErrorState({required this.errorMessage});
 }
